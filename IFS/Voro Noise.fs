@@ -2,8 +2,8 @@
 {
 	"NAME": "Voro Noise",
 	"DESCRIPTION": "Draws a noise texture based on blurred voronoi",
-	"CREDIT": "inigo quilez
-<http: //iquilezles.org/www/articles/voronoise/voronoise.htm>", "ISFVSN": "2",
+	"CREDIT": "inigo quilez <http: //iquilezles.org/www/articles/voronoise/voronoise.htm>",
+	"ISFVSN": "2",
 	"INPUTS": [
 		{
 			"NAME": "inputImage",
