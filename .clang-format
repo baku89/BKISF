@@ -1,0 +1,4 @@
+BasedOnStyle: Chromium
+ColumnLimit: 150
+UseTab: Always
+IndentWidth: 2
