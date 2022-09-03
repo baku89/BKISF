@@ -64,9 +64,9 @@
 			"CLAMP_MIN": true
 		},
 		{
-			"NAME": "angleOffset",
-			"LABEL": "Angle Offset",
-			"UNIT": "angle",
+			"NAME": "direction",
+			"LABEL": "Direction",
+			"UNIT": "direction",
 			"TYPE": "float"
 		},
 		{
@@ -113,7 +113,7 @@ void main() {
     float distCh = sampledMatte[distChannelIndex];
     float angleCh = sampledMatte[angleChannelIndex];
 
-    float angle = (angleCh * TAU * angleScale) + angleOffset;
+    float angle = (angleCh * TAU * angleScale) + direction;
 
     vec2 offset = vec2(cos(angle), sin(angle)) * distPerStep * distCh;
 

@@ -22,7 +22,7 @@
 			"NAME": "angle",
 			"LABEL": "Angle",
 			"TYPE": "float",
-			"UNIT": "angle"
+			"UNIT": "direction"
 		},
 		{
 			"NAME": "i4a_CustomUI",
