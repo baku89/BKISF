@@ -128,15 +128,19 @@ void main() {
   pos = rotate(pos, rotation);
   pos /= size;
 
-  vec2 dsp = disperse.yx;
-  dsp.y = 1.0 - dsp.y;
+  vec2 dsp = disperse.xy;
   dsp = dsp * 2.0 - 1.0;
 
-  float gr = grayscale ? 0.0 : 1.0;
-
   float r = iqnoise(pos, dsp);
-  float g = iqnoise(pos + random1To2(seed + 123.123) * gr, dsp);
-  float b = iqnoise(pos + random1To2(seed + 831.23) * gr, dsp);
 
-  gl_FragColor = vec4(r, g, b, 1.);
+  vec3 color = vec3(r);
+
+  if (!grayscale) {
+    color.g = iqnoise(pos + random1To2(seed + 123.123), dsp);
+    color.b = iqnoise(pos + random1To2(seed + 831.23), dsp);
+  }
+
+  float mask = IMG_THIS_PIXEL(inputImage).a;
+
+  gl_FragColor = vec4(color, mask);
 }
