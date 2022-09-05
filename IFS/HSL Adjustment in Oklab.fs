@@ -1,11 +1,8 @@
 
 /*{
-	"DESCRIPTION": "",
-	"CREDIT": "",
+	"DESCRIPTION": "Adjusts pixel color by interpolating HSL in Oklab color space to make the result more natural perceptually.",
+	"CREDIT": "Baku Hashimoto <https://baku89.com>",
 	"ISFVSN": "2",
-	"CATEGORIES": [
-		"XXX"
-	],
 	"INPUTS": [
 		{
 			"NAME": "inputImage",
@@ -135,7 +132,7 @@ void main() {
 
   lightness = max(0.0, lightness * lightnessScale + lightnessOffset);
   chroma = max(0.0, chroma * chromaScale + chromaOffset);
-  hue += hueOffset;
+  hue -= hueOffset;
 
   lab = vec3(lightness, chroma * cos(hue), chroma * sin(hue));
 
