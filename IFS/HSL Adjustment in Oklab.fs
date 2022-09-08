@@ -1,7 +1,7 @@
 
 /*{
 	"DESCRIPTION": "Adjusts pixel color by interpolating HSL in Oklab color space to make the result more natural perceptually.",
-	"CREDIT": "Baku Hashimoto <https://baku89.com>",
+	"CREDIT": "Baku Hashimoto <baku89.com>",
 	"ISFVSN": "2",
 	"INPUTS": [
 		{

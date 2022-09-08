@@ -2,6 +2,7 @@
 {
 	"DESCRIPTION": "Displaces an image in cartesian coordinate",
 	"ISFVSN": "2",
+	"CREDIT": "Baku Hashimoto <baku89.com>",
 	"INPUTS": [
 		{
 			"NAME": "inputImage",

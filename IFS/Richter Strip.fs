@@ -2,7 +2,7 @@
 {
 	"NAME": "Richter Strip",
 	"DESCRIPTION": "Stretches an image like Gerhard Richter's Strip",
-	"CREDIT": "Baku Hashimoto",
+	"CREDIT": "Baku Hashimoto <baku89.com>",
 	"ISFVSN": "2",
 	"INPUTS": [
 		{

@@ -2,7 +2,7 @@
 {
 	"NAME": "Colorama by Layer",
 	"DESCRIPTION": "Applies Colorama by sampling gradient map from another image",
-	"CREDIT": "Baku Hashimoto",
+	"CREDIT": "Baku Hashimoto <baku89.com>",
 	"ISFVSN": "2",
 	"INPUTS": [
 		{
