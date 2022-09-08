@@ -1,6 +1,7 @@
 /*
 {
 	"DESCRIPTION": "Displaces an image along the gradient of matte",
+	"ISFVSN": "2",
 	"INPUTS": [
 		{
 			"NAME": "inputImage",
@@ -59,6 +60,14 @@
 			"TYPE": "bool",
 			"DEFAULT": true
 		}
+	],
+	"PASSES": [
+		{
+			"TARGET": "sobelImage",
+			"FLOAT": true
+		},
+		{
+		}
 	]
 }
 */
@@ -114,20 +123,24 @@ vec2 sobel(vec2 uv) {
 }
 
 void main() {
-  vec2 suv = uv2suv(isf_FragNormCoord.xy);
+  if (PASSINDEX == 0) {
+    gl_FragColor = vec4(sobel(isf_FragNormCoord.xy), 0.0, 1.0);
+  } else {
+    vec2 suv = uv2suv(isf_FragNormCoord.xy);
 
-  int intSubsteps = int(substeps);
-  float distPerStep = dist / float(intSubsteps);
+    int intSubsteps = int(substeps);
+    float distPerStep = dist / float(intSubsteps);
 
-  for (int i = 0; i < intSubsteps; i++) {
-    vec2 grad = sobel(suv2uv(suv)) * 10.0;
+    for (int i = 0; i < intSubsteps; i++) {
+      vec2 grad = IMG_NORM_PIXEL(sobelImage, suv2uv(suv)).xy;
 
-    vec2 offset = rotate(grad, -rotation) * distPerStep;
+      vec2 offset = rotate(grad, -rotation) * distPerStep;
 
-    suv -= offset;
+      suv -= offset;
+    }
+
+    vec2 uv = suv2uv(wrapPixelsAround ? mirrored(suv) : suv);
+
+    gl_FragColor = IMG_NORM_PIXEL(inputImage, uv);
   }
-
-  vec2 uv = suv2uv(wrapPixelsAround ? mirrored(suv) : suv);
-
-  gl_FragColor = IMG_NORM_PIXEL(inputImage, uv);
 }

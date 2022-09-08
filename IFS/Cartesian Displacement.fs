@@ -1,6 +1,7 @@
 /*
 {
 	"DESCRIPTION": "Displaces an image in cartesian coordinate",
+	"ISFVSN": "2",
 	"INPUTS": [
 		{
 			"NAME": "inputImage",
