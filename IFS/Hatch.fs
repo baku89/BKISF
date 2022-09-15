@@ -1,6 +1,6 @@
 /*
 {
-	"DESCRIPTION": "Places the input image repeatedly with feathered edge, attempting to turn it into a tiling texture",
+	"DESCRIPTION": "Applies a hatching-like effect with using a pattern image",
 	"ISFVSN": "2",
 	"CREDIT": "Baku Hashimoto <baku89.com>",
 	"INPUTS": [
@@ -15,9 +15,21 @@
 		},
 		{
 			"NAME": "scale",
+			"LABEL": "Scale",
 			"TYPE": "float",
 			"DEFAULT": 1,
 			"UNIT": "percent"
+		},
+		{
+			"NAME": "influence",
+			"LABEL": "Influence",
+			"TYPE": "float",
+			"UNIT": "percent",
+			"CLAMP_MIN": true,
+			"CLAMP_MAX": true,
+			"MIN": 0,
+			"MAX": 1,
+			"DEFAULT": 1
 		},
 		{
 			"NAME": "quality",
@@ -42,6 +54,8 @@ void main() {
   int sampleNum = int(quality);
   float sampleNumF = float(sampleNum);
 
+  vec4 original = IMG_THIS_PIXEL(inputImage);
+
   vec4 ret = vec4(0.0);
 
   for (int y = 0; y < sampleNum; y++) {
@@ -50,5 +64,7 @@ void main() {
     }
   }
 
-  gl_FragColor = ret / pow(sampleNumF, 2.0);
+  ret /= pow(sampleNumF, 2.0);
+
+  gl_FragColor = mix(original, ret, influence);
 }
