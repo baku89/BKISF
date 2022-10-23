@@ -82,7 +82,7 @@ vec2 complexReciprocal(vec2 z) {
 }
 
 vec2 complexDiv(vec2 a, vec2 b) {
-  return complexMult(a,complexReciprocal(b));
+  return complexMult(a, complexReciprocal(b));
 }
 
 vec2 complexPower(vec2 a, vec2 b) {
@@ -99,24 +99,23 @@ float map(float value, float istart, float istop, float ostart, float ostop) {
 }
 
 mat2 rotate2d(in float radians) {
-    float c = cos(radians);
-    float s = sin(radians);
-    return mat2(c, -s, s, c);
+  float c = cos(radians);
+  float s = sin(radians);
+  return mat2(c, -s, s, c);
 }
 
 vec4 getDrosteColor(float bg) {
+  float aspect = RENDERSIZE.y / RENDERSIZE.x;
   // Shift and scale coordinates to [-0.5,0.5]
   vec2 uv = isf_FragNormCoord.xy - 0.5;
-  uv.y *= RENDERSIZE.y / RENDERSIZE.x;
+  uv.y *= aspect;
 
   uv *= rotate2d(-rotation);
   uv /= scale;
 
   // Escher grid transform
   float factor = pow(1.0 / drosteScale, branches);
-  uv = complexPower(
-    uv,
-    complexDiv(vec2(log(factor), TAU), vec2(0.0, TAU)));
+  uv = complexPower(uv, complexDiv(vec2(log(factor), TAU), vec2(0.0, TAU)));
 
   // recutangular droste effect
   float ft = fract(zoom);
@@ -124,16 +123,17 @@ vec4 getDrosteColor(float bg) {
   ft = log(3. * ft + 1.) / log(4.);
   uv *= 1.0 + ft * (drosteScale - 1.0);
 
-  float npower = max(nearestPower(uv.x * (1.0 + bg), drosteScale),
-                     nearestPower(uv.y * (1.0 + bg), drosteScale));
+  float npower = max(nearestPower(uv.x * (1.0 + bg), drosteScale), nearestPower(uv.y * (1.0 + bg), drosteScale));
 
-  uv.x = map(uv.x, -npower, npower, -1.0, 1.0);
+  uv.x = map(uv.x, -npower, npower, -aspect, aspect);
   uv.y = map(uv.y, -npower, npower, -1.0, 1.0);
 
   return IMG_NORM_PIXEL(inputImage, uv / 2. + vec2(.5));
 }
 
-float blendOverAlpha(vec4 A, vec4 B) { return B.a + A.a * (1. - B.a); }
+float blendOverAlpha(vec4 A, vec4 B) {
+  return B.a + A.a * (1. - B.a);
+}
 
 vec4 blendOver(vec4 A, vec4 B) {
   float alpha = B.a + A.a * (1. - B.a);
@@ -144,7 +144,5 @@ vec4 blendOver(vec4 A, vec4 B) {
 void main() {
   vec4 color1 = getDrosteColor(0.0);
   vec4 color2 = getDrosteColor(1.0);
-
-  // UNDO SHIFT AND SCALE:
   gl_FragColor = blendOver(color2, color1);
 }
